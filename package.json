@@ -1,0 +1,21 @@
+{
+ "name": "coralis-3d",
+ "version": "0.5.0",
+ "private": true,
+ "type": "module",
+ "scripts": {
+  "dev": "vite",
+  "build": "vite build",
+  "preview": "vite preview",
+  "check": "node checks/geometry-check.mjs",
+  "regression": "node checks/regression.mjs",
+  "inspect": "node checks/inspect-check.mjs",
+  "test": "node checks/geometry-check.mjs && node checks/regression.mjs && node checks/inspect-check.mjs"
+ },
+ "dependencies": {
+  "three": "0.170.0"
+ },
+ "devDependencies": {
+  "vite": "^5.4.11"
+ }
+}
