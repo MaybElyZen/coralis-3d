@@ -6,11 +6,14 @@ const names=['Frame_T2_R1_C01_TREATMENT','Frame_T1_R2_C08_CONTROL','Coral_T2_R1_
 'Collector main under deck','Riser','Manifold','Observation grating (spine)','Boardwalk','Shore promenade (placeholder)','Main pile','Boardwalk pile','Roof Zone A','Roof Zone C','Level 2 slab','Deck slab','Timber deck finish','Lift shaft','Stair','Furniture'];
 let bad=0;const mk=n=>({name:n,parent:null});
 for(const n of names){const e=infoFor(mk(n));const ok=!!e&&!!e[3]&&!!e[4];console.log((ok?'PASS ':'FAIL ')+n+(ok?'  -> '+e[1]+' ['+e[4]+']':''));if(!ok)bad++;}
+const s5=['Annex_floor_slab','Annex_wall_east','Annex_roof_slab','Annex_sleeve_roof_vawt1','Hyb_vawt_1','Hyb_anemometer_mast','Hyb_ems_cabinet','Hyb_battery_cabinet_1','Hyb_db_distribution_board','Hyb_cable_pv_dc_trunk','Hyb_flow_arrow','WT_pipe_raw','WT_pipe_process','WT_pipe_treated','WT_pipe_np','WT_arrow','WT_terminal_irrigation','WT_terminal_potable','WT_sign_nonpotable','WT_sign_potable',...Array.from({length:13},(_,i)=>'WT_S'+(i+1)+'_x')];
+for(const n of s5){const e=infoFor(mk(n));const ok=!!e&&!!e[3]&&!!e[4];console.log((ok?'PASS ':'FAIL ')+'stage5 '+n+(ok?'  -> '+e[1]:''));if(!ok)bad++;}
+for(const n of['SERVICES ANNEX','ANNEX_DECK','ANNEX_SHELL','HYBRID ENERGY','HYB_ROOM','HYB_ROOF','HYB_UNDER','WATER TREATMENT','WT_ROOM','WT_UNDER','WT_INLINE','WT_OUTLETS','WT_STAGE1']){const e=infoFor(mk(n));console.log((e?'PASS ':'FAIL ')+'group '+n);if(!e)bad++;}
 // group-level names used by the model must resolve too
 for(const n of['DECK','PILES','ENCLOSURE','LEVEL2','INTERIOR','ROOFS','GLASS','BUILDING']){const e=infoFor(mk(n));const ok=!!e;console.log((ok?'PASS ':'FAIL ')+'group '+n);if(!ok)bad++;}
 // statuses must be from the allowed vocabulary
-const allowed=new Set(['Proposed','Illustrative','Unverified','Assumption','Placeholder']);
-const src=fs.readFileSync(new URL('../src/interface.js',import.meta.url),'utf8');const used=[...src.matchAll(/'(Proposed|Illustrative|Unverified|Assumption|Placeholder)[A-Za-z|]*'/g)].flatMap(m=>m[0].slice(1,-1).split('|'));
+const allowed=new Set(['Proposed','Illustrative','Unverified','Assumption','Placeholder','Conditional']);
+const src=['interface.js','info5.js'].map(f=>fs.readFileSync(new URL('../src/'+f,import.meta.url),'utf8')).join('\n');const used=[...src.matchAll(/'(Proposed|Illustrative|Unverified|Assumption|Placeholder|Conditional)[A-Za-z|]*'/g)].flatMap(m=>m[0].slice(1,-1).split('|'));
 const okv=used.every(u=>allowed.has(u));console.log((okv?'PASS ':'FAIL ')+'status vocabulary');if(!okv)bad++;
 // names promised in the code exist in source
 const code=['building','canopy','solar','rainwater','underwater','sensors'].map(f=>fs.readFileSync(new URL('../src/'+f+'.js',import.meta.url),'utf8')).join('\n');

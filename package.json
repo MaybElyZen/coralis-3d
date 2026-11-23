@@ -10,7 +10,8 @@
   "check": "node checks/geometry-check.mjs",
   "regression": "node checks/regression.mjs",
   "inspect": "node checks/inspect-check.mjs",
-  "test": "node checks/geometry-check.mjs && node checks/regression.mjs && node checks/inspect-check.mjs"
+  "test": "node checks/geometry-check.mjs && node checks/regression.mjs && node checks/inspect-check.mjs && node --import ./checks/register-mock.mjs checks/stage5-check.mjs",
+  "stage5": "node --import ./checks/register-mock.mjs checks/stage5-check.mjs"
  },
  "dependencies": {
   "three": "0.170.0"

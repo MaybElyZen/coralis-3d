@@ -1,4 +1,15 @@
-# Testing record, Stage 4
+# Stage 5 status (read first)
+| Item | Result |
+|---|---|
+| `npm test` (geometry 40 + regression 27 + inspection + Stage 5 checks) | ALL PASSED, 232 checks |
+| Protected geometry files byte-identical | PASSED |
+| Stage 5 builders executed against a three.js STAND-IN (checks/three-mock.mjs) for wall/sleeve clash tests | PASSED (the real three.js was not available) |
+| `npm install` / `npm run build` | NOT RUN: the build sandbox had no network access |
+| In-browser self-test (key T), visual check, sea-surface look | NOT RUN: no browser |
+
+Run `npm install && npm run build && npm run dev`, then press T in the page.
+
+# Testing record, Stage 5 (supersedes Stage 4 record below)
 
 Environment used to build this version: no web browser and no internet access (npm install timed out). Therefore NO browser test and NO `npm run build` was performed.
 

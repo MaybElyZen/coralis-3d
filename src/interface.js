@@ -1,3 +1,4 @@
+import {INFO5} from './info5.js';
 const D='Conceptual proposal, not an approved construction work.';
 // [regex, name, purpose, quantity, status chips (Proposed | Illustrative | Unverified | Assumption | Placeholder), note]
 const INFO=[
@@ -32,8 +33,8 @@ const INFO=[
 [/^(GLASS|ENCLOSURE)/,'Glass walls and enclosure','Glazed enclosure of Zones A and C.','Enclosed 864 m² + 288 m² covered terrace','Proposed',''],
 [/^(INTERIOR|Furniture|Stair|Lift)/,'Interior','Rooms, stair, lift core and simple furniture.','1 stair, 1 lift','Proposed|Illustrative','Furniture is visual only. The core also holds the stack trunk.'],
 [/^BUILDING|^DECK/,'Research building','Raised marine research and education pavilion: the upper layer of the dual-layer design.','1','Proposed','']];
-export const infoFor=o=>{for(let p=o;p;p=p.parent)if(p.name)for(const e of INFO)if(e[0].test(p.name))return e;return null;};
-export const infoCount=INFO.length;
+export const infoFor=o=>{for(let p=o;p;p=p.parent)if(p.name)for(const e of INFO5.concat(INFO))if(e[0].test(p.name))return e;return null;};
+export const infoCount=INFO.length+INFO5.length;
 export const RISK={normal:['Normal','#39e07a','Routine monitoring. Habitat node readings stay within the range expected from baseline data and the reference node.','Possible response: continue scheduled data review, sensor cleaning and frame inspection.'],
  alert:['Alert','#ffc857','A reading differs from the reference node or baseline range, or a sensor looks faulty.','Possible response: check the sensor, confirm by hand, sample more often, tell the project supervisor.'],
  action:['Action required','#ff8a3d','A problem is confirmed, for example stress signs, heavy sediment or fouling on frames.','Possible response: clean, move or lift the affected frames, adjust grating light, limit activity, record and report.'],
@@ -47,7 +48,7 @@ export function initUI(a){
  #ui button,.p button{min-height:34px;touch-action:manipulation}#pn{left:12px;top:calc(56px + env(safe-area-inset-top,0px));display:none;width:min(230px,70vw);max-height:calc(100vh - 110px);overflow:auto}
  #pn summary{cursor:pointer;color:#8fd3dd;font-weight:600;padding:5px 0}#pn button{margin:2px 2px 2px 0;padding:5px 8px;font-size:12px}#pn label{display:block;margin:4px 0}
  #ct{display:none;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));width:min(290px,60vw);max-height:36vh;overflow:auto}#ct b{color:#8fd3dd;font-size:13px}#ct p{margin:4px 0}#ct small{display:block;margin-top:4px;opacity:.8}
- .chip{display:inline-block;border-radius:10px;padding:1px 7px;margin:3px 3px 3px 0;font-size:11px;color:#071820}.Proposed{background:#6fd3c9}.Illustrative{background:#9db7ff}.Unverified{background:#ffc857}.Assumption{background:#d9a6ff}.Placeholder{background:#cfcfcf}
+ .chip{display:inline-block;border-radius:10px;padding:1px 7px;margin:3px 3px 3px 0;font-size:11px;color:#071820}.Proposed{background:#6fd3c9}.Illustrative{background:#9db7ff}.Unverified{background:#ffc857}.Assumption{background:#d9a6ff}.Placeholder{background:#cfcfcf}.Conditional{background:#ffb3a1;border:1px dashed #7a2e1a}
  #rb{display:none;right:12px;top:calc(12px + env(safe-area-inset-top,0px));font-size:12px}#lb{position:fixed;inset:0;pointer-events:none;overflow:hidden}.lb{position:absolute;transform:translate(-50%,-130%);background:rgba(8,20,28,.72);color:#fff;border-radius:4px;padding:1px 6px;font:11px system-ui;white-space:nowrap}
  #cp{display:none;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));width:min(900px,94vw);background:rgba(255,255,255,.95);color:#10222c;border:2px solid #0d3b4a;font-size:clamp(15px,2.3vw,26px);padding:12px 18px}
  #cp h2{margin:0 0 4px;font:700 clamp(17px,2.8vw,32px) system-ui}#cp p{margin:0 0 8px;line-height:1.35}#cp button{font-size:clamp(14px,2vw,22px);margin-right:6px;padding:4px 12px;background:#0d3b4a;color:#fff;border:0;border-radius:6px}
@@ -55,7 +56,7 @@ export function initUI(a){
  #st{max-width:min(520px,60vw)}@media(max-width:900px){#st{display:none}}`;document.head.append(st);
  const el=(h,id)=>{const d=document.createElement('div');d.className='p';d.id=id;d.innerHTML=h;document.body.append(d);return d;};
  const tg=document.createElement('button');tg.textContent='Controls';tg.onclick=()=>pn.style.display=pn.style.display==='block'?'none':'block';document.getElementById('ui').append(tg);
- const Vw=[['overall','Overall'],['building','Building'],['underwater','Underwater'],['restoration','Restoration'],['sensors','Sensor network'],['green','Green systems']];
+ const Vw=[['overall','Overall'],['building','Building'],['underwater','Underwater'],['restoration','Restoration'],['sensors','Sensor network'],['green','Green systems'],['hybrid','Hybrid energy'],['water','Water treatment']];
  const S=[['off','Off'],['sectionLong','Long cut (Y = 9)'],['sectionCross','Cross cut (X = 24)']];
  const pn=el(`<details open><summary>Views</summary>${Vw.map(v=>`<button data-v="${v[0]}">${v[1]}</button>`).join('')}</details>
  <details><summary>Section / cutaway</summary>${S.map(v=>`<button data-s="${v[0]}">${v[1]}</button>`).join('')}</details>
